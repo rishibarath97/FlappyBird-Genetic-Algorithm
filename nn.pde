@@ -1,23 +1,18 @@
 class Brain{
   float w1 = 0;
   float w2 = 0;
-  int inputNodes = 5;
-  float learningRate = 0.001;
+  int inputNodes = 5;                                 //Number of nodes for the input 
   float weights[] = new float[inputNodes];
   float bias[] = new float[inputNodes];
 
-  void initial(){
-    for(int i=0;i<inputNodes;i++){
+  void initial(){                                     //Set the weights to random initially
+    for(int i=0;i<inputNodes;i++){  
        weights[i] = random(-1,1);  
        bias[i] = random(-1,1);
     }  
   }
-  void initial(float weight[],float b[]){
-     weights = weight;
-     bias = b;
-    }  
   
-  float predict(float weights[],float inputs[]){
+  float predict(float weights[],float inputs[]){      //Prediction function based on the NN weights
     int n = inputNodes;
     float sum = 0;
     
@@ -28,15 +23,7 @@ class Brain{
     return result;
   }
   
-  float activator(float x){  
+  float activator(float x){                             //Activation function is sigmoid
     return pow(1 + exp(-x),-1);
-    
-  }
-  
-  float[] train(float weights[],float inputs[]){
-    for(int i=0;i<inputNodes;i++){
-      weights[i] += learningRate*inputs[i];  
-    }
-    return weights;
   }
 }
