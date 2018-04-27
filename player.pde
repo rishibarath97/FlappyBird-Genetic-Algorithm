@@ -10,17 +10,17 @@ class Player{
   float score = 0;
   
   void show(){
-    ellipse(x,y,32,32);
+    ellipse(x,y,32,32);         //Draw the player
     fill(255,255,255,100);
   }
   
   void jump(){
-    vel += lift;
+    vel += lift;                //Jump a certain number of pixels
   }
   
   void update(){
-    vel += gravity;
-    y += vel;
+    vel += gravity;             //Update gravity which affects velocity
+    y += vel;                   //velocity affects position
     }
   
   float retX(){
