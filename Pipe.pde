@@ -15,7 +15,7 @@ class Pipe{
   }
   
   boolean offscreen(){
-    if(x < -width/2)                                              //Chekck if the pipe has gone offscreen
+    if(x < -width/2)                                              //Check if the pipe has gone offscreen
       return true;
     else
       return false;
@@ -23,7 +23,7 @@ class Pipe{
   
   boolean hit(Player player){
     if(player.x == x){ 
-      if((player.y >= height/2 - h || player.y <= -h+spacing))    //Checking if the bird is in between 
+      if((player.y >= height/2 - h || player.y <= -h+spacing))    //Check if the bird is in between the pipes
         return true;
     }
       return false;
