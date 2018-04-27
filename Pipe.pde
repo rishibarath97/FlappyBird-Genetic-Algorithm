@@ -3,19 +3,19 @@ class Pipe{
   float x = width/2;
   float y = 0;
   float speed = 5;
-  float spacing = 100;
+  float spacing = 100;                                            //spacing between the pipes
   
   void show(){
-    rect(x,height/2,20,-h);
-    rect(x,-height/2,20,height/2 - h + spacing);
+    rect(x,height/2,20,-h);                                       //Draw bottom pipe
+    rect(x,-height/2,20,height/2 - h + spacing);                  //Draw top pipe
   }
   
   void update(){   
-    x -= speed;
+    x -= speed;                                                   //Change the speed every frame
   }
   
   boolean offscreen(){
-    if(x < -width/2 || x > height/2)
+    if(x < -width/2)                                              //Chekck if the pipe has gone offscreen
       return true;
     else
       return false;
@@ -23,7 +23,7 @@ class Pipe{
   
   boolean hit(Player player){
     if(player.x == x){ 
-      if((player.y >= height/2 - h || player.y <= -h+spacing))
+      if((player.y >= height/2 - h || player.y <= -h+spacing))    //Checking if the bird is in between 
         return true;
     }
       return false;
@@ -32,9 +32,5 @@ class Pipe{
   
   float retSpace(){
     return (- h + spacing);  
-  }
- 
-  float retH(){
-    return h;  
   }
 }
