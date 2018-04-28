@@ -8,6 +8,7 @@ You can find his implementation of this on p5.js on (https://youtu.be/c6y21FkaUq
 This project has a basic flappy bird game layout where a bird (player) must avoid the oncoming pipes and the floor. The game is played using a player input to make the bird jump.
 In this project, I used a basic 2 layer neural network along with a genetic algorithm to "teach" the bird when to jump and when not to.
 
+
 The inputs given to the Genetic Algorithm are:
 1: The 'y' value of the bird
 2: The 'x' value of the nearest pipe
