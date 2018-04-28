@@ -11,9 +11,13 @@ In this project, I used a basic 2 layer neural network along with a genetic algo
 The inputs given to the Genetic Algorithm are:
 
 1: The 'y' value of the bird
+
 2: The 'x' value of the nearest pipe
+
 3: The co-ordinate of the lower pipe's height
+
 4: The co-ordinate of the top pipe's height
+
 5: The bird's own velocity
 
 The activation function used for this NN is the the sigmoid function (or logistic function).
