@@ -29,10 +29,10 @@ void setup(){
 void draw(){
   background(0);
   translate(width/2,height/2);
-  float m = mouseX;
+  float m = mouseX;                                                         //Get mouseX to control speed
   rate = map(m,0,width,1,5);
   for(int k=0;k<rate;k++){
-  if(count % 60 == 0){
+  if(count % 60 == 0){                                                      //Pipe appeares every count % 60 times
     if(pipes.size() >= 1)
       pipes.add(new Pipe());
   }
@@ -46,7 +46,7 @@ void draw(){
     
     for(Pipe p : pipes){
       for(int j=0;j<players.size();j++){
-        if(p.hit(players.get(j)) || players.get(j).y > height/2 || players.get(j).y < -height/2){
+        if(p.hit(players.get(j)) || players.get(j).y > height/2 || players.get(j).y < -height/2){      //Check player boundary condition
           Savedplayers.add(players.get(j));
           Savedbrains.add(brains.get(j));
           players.remove(j);
@@ -58,14 +58,14 @@ void draw(){
   
   for(int j = 0;j<players.size();j++){
     float inputs[] = new float[5];
-    inputs[0] = players.get(j).retY() / height;
-    Pipe p = returnNearestPipe(pipes,players.get(j));
-    inputs[1] = p.x / width;
-    inputs[2] = ((height / 2) - p.h) / height;
-    inputs[3] = (-p.h + p.spacing) / height; 
-    inputs[4] = players.get(j).vel;
+    inputs[0] = players.get(j).retY() / height;                               //player's y position
+    Pipe p = returnNearestPipe(pipes,players.get(j));                         //Find nearest pipe 
+    inputs[1] = p.x / width;                                                  //pipe's x position
+    inputs[2] = ((height / 2) - p.h) / height;                                //height of nearest pipe
+    inputs[3] = (-p.h + p.spacing) / height;                                  //height of the top pipe
+    inputs[4] = players.get(j).vel;                                           //player's velocity
 
-    float result = brains.get(j).predict(brains.get(j).weights,inputs);
+    float result = brains.get(j).predict(brains.get(j).weights,inputs);       //Calculate the result of the NN
     if(result > 0.5)
       players.get(j).jump();
     
@@ -76,10 +76,9 @@ void draw(){
   }
   count++;
   if(players.size() == 0){
-    //Brain b = calcBestPlayer();
-    Brain first = Savedbrains.get(Savedbrains.size()-1);
+    Brain first = Savedbrains.get(Savedbrains.size()-1);                      //Best player
     printArray(first.weights);
-    Brain second = Savedbrains.get(Savedbrains.size()-2);
+    Brain second = Savedbrains.get(Savedbrains.size()-2);                     //Second best player
     if(count > countMax){
       countMax = count;
       print("NEW HIGH SCORE:",countMax);
@@ -90,8 +89,8 @@ void draw(){
     Savedplayers.clear();
     println("Generation:",gen);
     for(int i=0;i<noOfPlayers;i++){
-      Brain b = crossOver(first,second,0.2);
-      b = mutate(b,0.2);
+      Brain b = crossOver(first,second,0.2);                                  //CrossOver with crossOverRate = 20%
+      b = mutate(b,0.2);                                                      //Mutate 20% of the weights
       brains.add(b);
       players.add(new Player());
     }
@@ -101,7 +100,6 @@ void draw(){
     gen++;
   } 
 }
-  //println(brains.size());
 }
 
 Pipe returnNearestPipe(ArrayList<Pipe> pipes,Player player){
@@ -119,27 +117,15 @@ Pipe returnNearestPipe(ArrayList<Pipe> pipes,Player player){
   return closest;
 }
 
-Brain calcBestPlayer(){
-  Brain b = null;
-  float sum = 0;
-  for(Player pl :Savedplayers){
-    sum += pl.score;
-  }
-  for(Player P:Savedplayers){
-    P.fitness = P.score / sum;
-  }
-  return b;
-}
-
 Brain crossOver(Brain one, Brain two,float crossOverRate){
   float w[] = new float[one.weights.length];
     for(int i=0;i<one.weights.length;i++){
-      float rand = random(0,1);
-      if(rand < crossOverRate){
-          w[i] = two.weights[i];
+      float rand = random(0,1);                                                   //Calculate a random number
+      if(rand < crossOverRate){                                                   //Less than crossOverRate
+          w[i] = two.weights[i];                                                  //Take weight 2    
       }
       else{
-        w[i] = one.weights[i];
+        w[i] = one.weights[i];                                                     //Else weight 1
       }
     }
     Brain b = new Brain();
@@ -150,9 +136,9 @@ Brain crossOver(Brain one, Brain two,float crossOverRate){
 
 Brain mutate(Brain b,float rate){
     for(int i=0;i<b.weights.length;i++){
-      float rand = random(0,1);
+      float rand = random(0,1);                                                     //Calculate random
       if(rand < rate){  
-        b.weights[i]*=random(1);
+        b.weights[i]*=random(1);                                                     //mutate by a random number
     }
   }
   return b;
